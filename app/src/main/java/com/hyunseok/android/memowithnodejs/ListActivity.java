@@ -1,6 +1,7 @@
 package com.hyunseok.android.memowithnodejs;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.hyunseok.android.memowithnodejs.domain.Data;
+import com.hyunseok.android.memowithnodejs.domain.Qna;
 
 import java.util.List;
 
@@ -31,17 +33,23 @@ public class ListActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(ListActivity.this, WriteActivity.class);
+                startActivity(intent);
             }
         });
 
         setList();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
+
     ListView listView;
     CustomAdapter adapter;
-    List<Data.Qna> datas;
+    List<Qna> datas;
     private void setList() {
         listView = (ListView) findViewById(R.id.listView);
         DataStore dataStore = DataStore.getInstance();
@@ -53,11 +61,11 @@ public class ListActivity extends AppCompatActivity {
 
 class CustomAdapter extends BaseAdapter {
 
-    List<Data.Qna> datas;
+    List<Qna> datas;
     Context context;
     LayoutInflater inflater;
 
-    public CustomAdapter(Context context, List<Data.Qna> datas) {
+    public CustomAdapter(Context context, List<Qna> datas) {
         this.context = context;
         this.datas = datas;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -84,7 +92,7 @@ class CustomAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.list_item, null);
         }
 
-        Data.Qna qna = datas.get(position);
+        Qna qna = datas.get(position);
         TextView tv_name = (TextView) convertView.findViewById(R.id.tv_name);
         TextView tv_title = (TextView) convertView.findViewById(R.id.tv_title);
 

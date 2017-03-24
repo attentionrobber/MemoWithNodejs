@@ -14,6 +14,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String SITE_URL = "http://192.168.0.107:8070/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     public void getData() {
         // 1. 레트로핏을 생성하고
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.107:8070/")
+                .baseUrl(SITE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

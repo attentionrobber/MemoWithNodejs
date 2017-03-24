@@ -1,7 +1,9 @@
 package com.hyunseok.android.memowithnodejs;
 
 import com.hyunseok.android.memowithnodejs.domain.Data;
+import com.hyunseok.android.memowithnodejs.domain.Qna;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,7 +14,7 @@ public class DataStore {
     private static DataStore instance = null;
 
     private DataStore() {
-
+        datas = new ArrayList<>();
     }
 
     public static DataStore getInstance() {
@@ -22,13 +24,20 @@ public class DataStore {
         return instance;
     }
 
-    private List<Data.Qna> datas;
+    private List<Qna> datas;
 
-    public List<Data.Qna> getDatas() {
+    public List<Qna> getDatas() {
         return datas;
     }
 
-    public void setDatas(List<Data.Qna> datas) {
-        this.datas = datas;
+    public void setDatas(List<Qna> datas) {
+        this.datas.clear();
+        for(Qna qna : datas) {
+            this.datas.add(qna);
+        }
+    }
+
+    public void addtData(Qna qna) {
+        this.datas.add(qna);
     }
 }
