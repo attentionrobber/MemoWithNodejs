@@ -3,6 +3,7 @@ package com.hyunseok.android.memowithnodejs;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.RequiresPermission;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -61,11 +62,11 @@ public class WriteActivity extends AppCompatActivity {
 
                         String result = Remote.postJSON(MainActivity.SITE_URL + "bbs", jsonString);
 
-                        if("SUCCESS".equals(result)) { // server_beta1.js에 createData 함수에 있는 SUCCESS
-                            // 성공적으로 등로가면 내가 쓴 글을 목록에 더해준다.
-                            DataStore dataStore = DataStore.getInstance();
-                            dataStore.addtData(qna);
-                        }
+//                        if("SUCCESS".equals(result)) { // server_beta1.js에 createData 함수에 있는 SUCCESS
+//                            // 성공적으로 등로가면 내가 쓴 글을 목록에 더해준다.
+//                            DataStore dataStore = DataStore.getInstance();
+//                            dataStore.addtData(qna);
+//                        }
 
                         return result;
                     }
@@ -74,7 +75,12 @@ public class WriteActivity extends AppCompatActivity {
                     protected void onPostExecute(String result) {
                         super.onPostExecute(result);
                         //Snackbar.make(view, result, Snackbar.LENGTH_LONG);
+
+                        // 다시 MainActivity를 호출하는 방식이라면 singleInstance 설정을 해줘야한다.
+                        // Manifest.xml 에 ListActivity 부분에 android:launchMode="singleInstance"
                         Toast.makeText(WriteActivity.this, result, Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(WriteActivity.this, MainActivity.class);
+                        startActivity(intent);
                         finish();
                     }
                 };
