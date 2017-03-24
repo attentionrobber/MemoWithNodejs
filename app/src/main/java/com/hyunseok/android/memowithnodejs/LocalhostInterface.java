@@ -11,6 +11,6 @@ import retrofit2.http.Path;
  */
 
 public interface LocalhostInterface {
-    @GET("bbs}") //
+    @GET("bbs") //
     Call<Data> getData();
 }
